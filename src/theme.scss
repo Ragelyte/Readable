@@ -1,0 +1,27 @@
+
+// Colors
+
+
+$primary: #d6d6d6;
+
+$navbar-item-active-color: white;
+$navbar-item-active-background-color: #6c6c6c;
+$navbar-item-hover-background-color: #d6d6d6;
+$navbar-item-hover-color: black;
+$button-background-color: white;
+$box-background-color: #fbfbfb;
+
+.icon.is-small {
+  height: 1rem;
+  width: 1rem;
+  margin-right: 1.75rem;
+}
+
+
+
+@import '../node_modules/bulma/sass/utilities/initial-variables.sass';
+
+
+// your customization as described in the Bulma docs
+
+@import '../node_modules/bulma/bulma.sass';

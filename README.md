@@ -6,4 +6,3 @@ Project for Udacity's React & Redux course.
 
 * **Gintare Ragelyte**
 
-# Readable
