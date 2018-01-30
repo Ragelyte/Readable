@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Subheader = ({ title }) => (
+const Subheader = ({title}) => (
     <div className="column">
         <section className="hero is-primary">
             <div className="hero-body">
                 <p className="title">
-                    { title.charAt(0).toUpperCase() + title.slice(1) }
+                    {title.charAt(0).toUpperCase() + title.slice(1)}
                 </p>
             </div>
         </section>
@@ -13,5 +13,3 @@ const Subheader = ({ title }) => (
 );
 
 export default Subheader;
-
-

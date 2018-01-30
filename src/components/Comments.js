@@ -1,14 +1,13 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {addComment, fetchComment} from "../actions/index";
-import {connect} from "react-redux";
-import Comment from "./Comment";
+import {addComment, fetchComment} from '../actions/index';
+import {connect} from 'react-redux';
+import Comment from './Comment';
 
 class Comments extends Component {
-
     state = {
         comment: ''
-    }
+    };
 
     componentWillMount() {
         this.props.fetchComments(this.props.postId);
@@ -20,26 +19,25 @@ class Comments extends Component {
             body: this.state.comment,
             parentId: this.props.postId,
             timestamp: Math.floor(Date.now() / 1000),
-            id: Math.random().toString(36).substr(2, 10)
-        })
+            id: Math.random()
+                .toString(36)
+                .substr(2, 10)
+        });
         this.setState({
             comment: ''
-        })
-
-    }
+        });
+    };
 
     render() {
         return (
             <div>
                 {this.props.comments.map(comment => {
-                    return (
-                        <Comment key={comment.id} comment={comment}/>
-                    )
+                    return <Comment key={comment.id} comment={comment}/>;
                 })}
 
                 <input
                     onChange={event => {
-                        this.setState({comment: event.target.value})
+                        this.setState({comment: event.target.value});
                     }}
                     className="input is-rounded"
                     type="text"
@@ -52,29 +50,25 @@ class Comments extends Component {
                     value={this.state.comment}
                 />
             </div>
-        )
+        );
     }
 }
 
 Comments.propTypes = {
     postId: PropTypes.string.isRequired
-}
+};
 
 function mapStateToProps(state, ownProps) {
     return {
         comments: state.comments.comments
-    }
+    };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        fetchComments: (id) => dispatch(fetchComment(id)),
-        addComment: (comment) => dispatch(addComment(comment))
-    }
+        fetchComments: id => dispatch(fetchComment(id)),
+        addComment: comment => dispatch(addComment(comment))
+    };
 }
 
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(Comments);
+export default connect(mapStateToProps, mapDispatchToProps)(Comments);
