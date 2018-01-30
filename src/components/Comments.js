@@ -58,7 +58,7 @@ Comments.propTypes = {
     postId: PropTypes.string.isRequired
 };
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
     return {
         comments: state.comments.comments
     };

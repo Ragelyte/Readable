@@ -44,18 +44,13 @@ class Comment extends Component {
     render() {
         return (
             <div className="box">
-                <a
-                    onClick={this.deleteComment}
-                    className="delete is-light is-pulled-right"
-                >
-                    gbgbv
-                </a>
+                <a onClick={this.deleteComment} className="delete is-light is-pulled-right" />
                 <p>
                     {!this.state.editCommentFormOpen && (
                         <a onClick={this.openEditCommentForm} className="is-pulled-left">
-              <span className="icon is-small">
-                <i className="fas fa-edit"/>
-              </span>
+                              <span className="icon is-small">
+                                  <i className="fas fa-edit"/>
+                              </span>
                         </a>
                     )}
 
@@ -85,7 +80,7 @@ Comment.propTypes = {
     comment: PropTypes.object.isRequired
 };
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps() {
     return {};
 }
 

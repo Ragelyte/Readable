@@ -14,18 +14,15 @@ class PostView extends Component {
             title: '',
             body: ''
         };
-
-        this.onPostTitleChanged = this.onPostTitleChanged.bind(this);
-        this.onPostBodyChanged = this.onPostBodyChanged.bind(this);
     }
 
-    onPostTitleChanged(event) {
+    onPostTitleChanged = (event) => {
         this.setState({
             title: event.target.value
         });
     }
 
-    onPostBodyChanged(event) {
+    onPostBodyChanged = (event) => {
         this.setState({
             body: event.target.value
         });

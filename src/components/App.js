@@ -28,11 +28,8 @@ class App extends Component {
     }
 }
 
-function mapStateToProps(state) {
-    return {
-        // posts: state.posts.posts,
-        // comments: state.comments.comments
-    };
+function mapStateToProps() {
+    return {};
 }
 
 function mapDispatchToProps(dispatch) {

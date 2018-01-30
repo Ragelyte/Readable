@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 
-class CategoryDropDown extends Component {
+class CategoryDropdown extends Component {
     constructor(props) {
         super(props);
 
@@ -11,7 +11,6 @@ class CategoryDropDown extends Component {
 
     handleChange(event) {
         this.props.onChange(event);
-        this.setState({value: event.target.value});
     }
 
     render() {
@@ -32,7 +31,7 @@ class CategoryDropDown extends Component {
     }
 }
 
-CategoryDropDown.propTypes = {
+CategoryDropdown.propTypes = {
     onChange: PropTypes.func.isRequired
 };
 
@@ -42,8 +41,8 @@ function mapStateToProps(state) {
     };
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps() {
     return {};
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CategoryDropDown);
+export default connect(mapStateToProps, mapDispatchToProps)(CategoryDropdown);

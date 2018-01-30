@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {addPost} from '../actions/index';
-import CategoryDropDown from './CategoryDropDown';
+import CategoryDropdown from './CategoryDropDown';
 
 class CreatePostModal extends Component {
     state = {
@@ -12,20 +12,14 @@ class CreatePostModal extends Component {
 
     addPost = () => {
         const {body, title,category} = this.state
-        if (
-            body.length === 0 ||
-            title.length === 0 ||
-            category.length === 0
-        ) {
+        if (body.length === 0 || title.length === 0 || category.length === 0) {
             alert('Title, body and category fields are required');
         } else {
             this.props.addPost({
                 author: 'author',
                 body: body,
                 timestamp: Math.floor(Date.now() / 1000),
-                id: Math.random()
-                    .toString(36)
-                    .substr(2, 10),
+                id: Math.random().toString(36).substr(2, 10),
                 title: title,
                 category: category
             });
@@ -72,7 +66,7 @@ class CreatePostModal extends Component {
                                 </div>
                             </div>
 
-                            <CategoryDropDown
+                            <CategoryDropdown
                                 onChange={event => {
                                     this.setState({category: event.target.value});
                                 }}
@@ -93,10 +87,8 @@ class CreatePostModal extends Component {
     }
 }
 
-function mapStateToProps(state, ownProps) {
-    return {
-        //
-    };
+function mapStateToProps() {
+    return {};
 }
 
 function mapDispatchToProps(dispatch) {
