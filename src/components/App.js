@@ -4,7 +4,7 @@ import '../App.css';
 import {connect} from 'react-redux';
 import {fetchCategories, fetchPost} from '../actions/index';
 import Header from './Header';
-import {Route, withRouter} from 'react-router';
+import {Route, Switch, withRouter} from 'react-router';
 import MainPageView from './views/MainPageView';
 import CategoryView from './views/CategoryView';
 import PostView from './views/PostView';
@@ -19,10 +19,11 @@ class App extends Component {
         return (
             <div className="App">
                 <Header/>
-                <Route path="/post/:postId" component={PostView}/>
-                <Route exact path="/" component={MainPageView}/>
-                <Route path="/category/:category" component={CategoryView}/>
-                <Route path="/post/:id/comments" component={PostView}/>
+                <Switch>
+                    <Route exact path="/" component={MainPageView}/>
+                    <Route path="/category/:category" component={CategoryView}/>
+                    <Route path="/:category/:postId" component={PostView}/>
+                </Switch>
             </div>
         );
     }

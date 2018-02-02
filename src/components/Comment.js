@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {deleteComment, editComment} from '../actions/index';
 import moment from 'moment';
 import {connect} from 'react-redux';
+import CommentVote from "./CommentVote";
 
 class Comment extends Component {
     constructor(props) {
@@ -70,7 +71,9 @@ class Comment extends Component {
                         this.props.comment.body
                     )}
                 </p>
-                <p>{moment(this.props.comment.timestamp).format('ddd, hA')}</p>
+                <p>{moment(this.props.comment.timestamp).format('ddd, hA')} &#8226; {this.props.comment.author}</p>
+
+                <CommentVote commentId={this.props.comment.id} voteScore={this.props.comment.voteScore}/>
             </div>
         );
     }

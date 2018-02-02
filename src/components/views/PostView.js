@@ -3,18 +3,34 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import * as moment from 'moment';
 import Comments from '../Comments';
-import {deletePost, editPost} from '../../actions/index';
 import Post from '../Post';
+import VotePost from "../VotePost";
+import {closeEdit, deletePost, editPost, openEdit, redirectToHome} from "../../actions/index";
 
 class PostView extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            editPostFormOpen: false,
-            title: '',
-            body: ''
-        };
+        if (props.post !== undefined) {
+            this.state = {
+                title: props.post.title,
+                body: props.post.body
+            };
+        }
+        console.log('constructor', props.isDeleted)
     }
+
+    redirectToHome = () => {
+        this.props.redirectToHome();
+    }
+
+    deletePost = () => {
+        this.props.deletePost(this.props.post.id);
+    };
+
+    editPost = () => {
+        this.props.editPost(this.props.post.id, this.state.title, this.state.body);
+        this.props.closeEdit();
+    };
 
     onPostTitleChanged = (event) => {
         this.setState({
@@ -28,35 +44,35 @@ class PostView extends Component {
         });
     }
 
-    deletePost = () => {
-        this.props.deletePost(this.props.post.id);
-    };
-
-    editPost = () => {
-        this.props.editPost(this.props.post.id, this.state.title, this.state.body);
-        this.setState({
-            editPostFormOpen: false
-        });
-    };
-
     openEditPostForm = () => {
-        this.setState({
-            editPostFormOpen: true,
-            title: this.props.post.title,
-            body: this.props.post.body
-        });
-    };
+        this.props.openEdit();
+    }
+
+
+    componentWillReceiveProps = (newProps) => {
+        if (this.props.post === undefined && newProps.post !== undefined) {
+            this.setState({
+                title: newProps.post.title,
+                body: newProps.post.body
+            });
+        }
+        if (newProps.isDeleted) {
+            this.redirectToHome();
+        }
+        console.log('willmount', newProps.isDeleted)
+    }
 
     render() {
         return (
             <div>
                 {this.props.post === undefined ? (
-                    'loading'
+                    null
                 ) : (
                     <div className="column is-half is-offset-one-quarter">
                         <div className="box">
                             <div className="content">
-                                {this.state.editPostFormOpen ? (
+
+                                {this.props.editPostFormOpen ? (
                                     <input
                                         className="input is-rounded"
                                         type="text"
@@ -67,7 +83,7 @@ class PostView extends Component {
                                     <h3>{this.props.post.title}</h3>
                                 )}
 
-                                {this.state.editPostFormOpen ? (
+                                {this.props.editPostFormOpen ? (
                                     <input
                                         className="input is-rounded"
                                         type="text"
@@ -78,7 +94,7 @@ class PostView extends Component {
                                     this.props.post.body
                                 )}
 
-                                {this.state.editPostFormOpen && (
+                                {this.props.editPostFormOpen && (
                                     <a
                                         onClick={this.editPost}
                                         className="button is-light is-pulled-right is-small"
@@ -96,11 +112,14 @@ class PostView extends Component {
 
                             <div className="column">
                                 <div className="level-left">
+
+                                    <VotePost postId={this.props.post.id} voteScore={this.props.post.voteScore} />
+
                                     <div className="level-item">
-                    <span className="icon is-small">
-                      <i className="fas fa-heart"/>
-                        {this.props.post.voteScore}
-                    </span>
+                  <span className="icon is-small">
+                    <i className="fas fa-comment"/>
+                      {this.props.post.commentCount}
+                  </span>
                                     </div>
                                 </div>
                             </div>
@@ -112,16 +131,13 @@ class PostView extends Component {
                     </div>
                 )}
 
-                <div className="column ">
-                    <a onClick={this.openEditPostForm} className="button is-pulled-right">
-                        Edit
-                    </a>
-                    <a onClick={this.deletePost} className="button is-pulled-right">
-                        Delete
-                    </a>
+                <div className="column">
+                    <a onClick={this.deletePost} className="button is-pulled-right">Delete</a>
+                    <a onClick={this.openEditPostForm} className="button is-pulled-right">Edit</a>
                 </div>
             </div>
         );
+
     }
 }
 
@@ -133,7 +149,9 @@ function mapStateToProps(state, ownProps) {
     return {
         post: state.posts.posts.find(
             post => post.id === ownProps.match.params.postId
-        )
+        ),
+        isDeleted : state.posts.loaded && state.posts.posts.find(post => post.id === ownProps.match.params.postId) === undefined,
+        editPostFormOpen: state.posts.editPostFormOpen
     };
 }
 
@@ -141,7 +159,10 @@ function mapDispatchToProps(dispatch) {
     return {
         deletePost: postId => dispatch(deletePost(postId)),
         editPost: (commentId, title, body) =>
-            dispatch(editPost(commentId, title, body))
+            dispatch(editPost(commentId, title, body)),
+        openEdit: () => dispatch(openEdit()),
+        closeEdit: () => dispatch(closeEdit()),
+        redirectToHome: () => dispatch(redirectToHome())
     };
 }
 

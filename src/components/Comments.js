@@ -15,7 +15,7 @@ class Comments extends Component {
 
     addComment = () => {
         this.props.addComment({
-            author: 'asgasgsa',
+            author: 'author',
             body: this.state.comment,
             parentId: this.props.postId,
             timestamp: Math.floor(Date.now() / 1000),

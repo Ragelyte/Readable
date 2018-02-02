@@ -64,3 +64,20 @@ export const addPost = post => {
         body: JSON.stringify(post)
     }).then(res => res.json());
 };
+
+export const changePostVotescore = (id, vote) => {
+    return fetch(`${api}/posts/${id}`, {
+        headers,
+        method: 'POST',
+        body: JSON.stringify({option: vote})
+    }).then(res => res.json());
+};
+
+
+export const changeCommentVotescore = (id, vote) => {
+    return fetch(`${api}/comments/${id}`, {
+        headers,
+        method: 'POST',
+        body: JSON.stringify({option: vote})
+    }).then(res => res.json());
+};

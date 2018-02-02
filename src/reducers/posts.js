@@ -4,12 +4,14 @@ import {
     DELETE_POST,
     RECEIVE_POST,
     ORDER_BY_VOTES,
-    ORDER_BY_TIMESTAMP
+    ORDER_BY_TIMESTAMP,
 } from '../actions';
-import {ADD_COMMENT, DELETE_COMMENT} from '../actions/index';
+import {ADD_COMMENT, DELETE_COMMENT, CHANGE_POST_VOTESCORE, OPEN_EDIT, CLOSE_EDIT} from '../actions/index';
 
 const initialState = {
-    posts: []
+    posts: [],
+    loaded: false,
+    editPostFormOpen: false
 };
 
 function post(state = initialState, action) {
@@ -42,6 +44,7 @@ function post(state = initialState, action) {
         case RECEIVE_POST:
             return {
                 ...state,
+                loaded: true,
                 posts: action.posts
             };
         case ORDER_BY_VOTES:
@@ -77,6 +80,29 @@ function post(state = initialState, action) {
                     return post;
                 })
             };
+        case CHANGE_POST_VOTESCORE:
+            return {
+                posts: state.posts.slice().map(post => {
+                    if (post.id === action.postId) {
+                        if (action.vote === 'upVote') {
+                            return {...post, voteScore: post.voteScore + 1};
+                        } else {
+                            return {...post, voteScore: post.voteScore - 1};
+                        }
+                    }
+                    return post;
+                })
+            }
+        case OPEN_EDIT:
+            return {
+                ...state,
+                editPostFormOpen: true
+            }
+        case CLOSE_EDIT:
+            return {
+                ...state,
+                editPostFormOpen: false
+            }
         default:
             return state;
     }

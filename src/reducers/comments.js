@@ -2,7 +2,8 @@ import {
     ADD_COMMENT,
     DELETE_COMMENT,
     EDIT_COMMENT,
-    RECEIVE_COMMENT
+    RECEIVE_COMMENT,
+    CHANGE_COMMENT_VOTESCORE
 } from '../actions/index';
 
 const initialState = {
@@ -38,6 +39,19 @@ function comments(state = initialState, action) {
                 ...state,
                 comments: action.comments
             };
+        case CHANGE_COMMENT_VOTESCORE:
+            return {
+                comments: state.comments.slice().map(comment => {
+                    if (comment.id === action.commentId) {
+                        if (action.vote === 'upVote') {
+                            return {...comment, voteScore: comment.voteScore + 1};
+                        } else {
+                            return {...comment, voteScore: comment.voteScore - 1};
+                        }
+                    }
+                    return comment;
+                })
+            }
         default:
             return state;
     }
