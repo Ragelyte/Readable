@@ -22,34 +22,34 @@ export const CLOSE_EDIT = 'CLOSE_EDIT';
 export const REDIRECT_TO_EDIT = 'REDIRECT_TO_EDIT';
 
 export function openEdit() {
-    return {
-        type: OPEN_EDIT
-    };
+  return {
+    type: OPEN_EDIT
+  };
 }
 
 export function closeEdit() {
-    return {
-        type: CLOSE_EDIT
-    };
+  return {
+    type: CLOSE_EDIT
+  };
 }
 
 export const changePostVotescore = (postId, vote) => dispatch =>
-    API.changePostVotescore(postId, vote).then(() => {
-        dispatch({
-            type: CHANGE_POST_VOTESCORE,
-            postId,
-            vote
-        })
-    })
+  API.changePostVotescore(postId, vote).then(() => {
+    dispatch({
+      type: CHANGE_POST_VOTESCORE,
+      postId,
+      vote
+    });
+  });
 
 export const changeCommentVotescore = (commentId, vote) => dispatch =>
-    API.changeCommentVotescore(commentId, vote).then(() => {
-        dispatch({
-            type: CHANGE_COMMENT_VOTESCORE,
-            commentId,
-            vote
-        })
-    })
+  API.changeCommentVotescore(commentId, vote).then(() => {
+    dispatch({
+      type: CHANGE_COMMENT_VOTESCORE,
+      commentId,
+      vote
+    });
+  });
 
 export const addPost = post => dispatch =>
   API.addPost(post).then(postSaved => {
@@ -149,18 +149,11 @@ export function orderByTimestamp() {
   };
 }
 
-export const redirectToEdit = (post) => dispatch => {
-    dispatch(push('/' + post.category + '/' + post.id));
-    dispatch(openEdit())
-}
+export const redirectToEdit = post => dispatch => {
+  dispatch(push('/' + post.category + '/' + post.id));
+  dispatch(openEdit());
+};
 
 export const redirectToHome = () => dispatch => {
-    dispatch(push('/'));
-}
-
-
-
-
-
-
-
+  dispatch(push('/'));
+};
